@@ -2,47 +2,62 @@
 
 ## Project overview
 
-Presentation app for a university distributed systems course (Sistemas Distribuidos, UNSA 2026A). Built with TanStack Start (file-based router), React 19, Vite, Tailwind CSS v4, and Biome.
+UNSA Slides is a cloud slides management platform and CLI ecosystem built as a Bun monorepo.
+- **apps/web**: Cloud slide manager with dashboard, presenter/audience mode, organization sharing, Google OAuth, and slide ingestion API. Built with TanStack Start, React 19, Vite, Tailwind CSS v4, and Biome.
+- **apps/cli**: Developer CLI for slide authoring, project scaffolding (`slides init`), local dev preview (`slides dev`), authentication (`slides login`), and cloud publishing (`slides deploy`). Powered by Bun and `@clack/prompts`.
+- **packages/schemas**: Zod validation schemas and types for manifests, domain entities, and CLI-cloud API contracts.
+- **packages/db**: Drizzle ORM database layer (libSQL/SQLite), migrations, and schema definitions.
+- **packages/config**: Shared TypeScript configuration presets.
 
 ## Commands
 
-- `bun run dev` - dev server on port 3000
-- `bun run build` - production build
+- `bun run dev` / `bun run dev:web` - start web dev server on port 3000
+- `bun run dev:cli` - run CLI in development
+- `bun run build` - build all workspaces
+- `bun run typecheck` - typecheck all workspaces with TypeScript
 - `bun run lint:format` - auto-format with Biome
 - `bun run lint:check` - lint + format check with Biome (write mode)
 
-There is no typecheck script; run `bunx tsc --noEmit` directly. There are no tests.
-
-## Tech stack quirks
-
-- **TanStack Start** with file-based routing. Route tree is auto-generated at `src/routeTree.gen.ts` — never edit it. If you add/rename/remove a route file, regenerate it via `bun run dev` (the router plugin handles this).
-- **Biome** (not ESLint/Prettier). Uses double quotes, space indentation. Format check uses `--write` (mutates files in place).
-- **Tailwind v4** via Vite plugin (`@tailwindcss/vite`), not PostCSS.
-- **Zod v4** for env validation in `src/lib/env.ts`.
-
-## Architecture
+## Monorepo Architecture
 
 ```
-src/
-  routes/          # TanStack file-based routes
-    __root.tsx     # Root layout (HTML shell)
-    index.tsx      # Home page (lists presentations)
-    presentations/
-      route.tsx    # Layout wrapper for /presentations/*
-      index.tsx    # Redirects /presentations/ -> /
-      $topic.tsx   # Dynamic route, renders a presentation
-  shared/          # Reusable slide components (SlideWrap, PresentationDeck, etc.)
-  topics/          # Presentation content, one folder per topic
-    microphoto/    # "Microphoto" presentation
-      presentation/slides.tsx
-  lib/
-    presentations.tsx  # Registry of all presentations (slug, path, component)
-    env.ts            # Zod-validated env vars (BASE_URL)
+.
+├── apps/
+│   ├── web/                        # TanStack Start web platform
+│   │   ├── src/
+│   │   │   ├── routes/             # File-based routes
+│   │   │   ├── shared/             # Slide and UI components
+│   │   │   └── lib/                # Config and runtime utilities
+│   │   ├── vite.config.ts
+│   │   └── package.json            # @unsa-slides/web
+│   │
+│   └── cli/                        # Bun-native developer CLI
+│       ├── src/
+│       │   ├── commands/           # init, dev, login, link, deploy
+│       │   ├── templates/          # Slide starter templates
+│       │   └── cli.ts              # Commander entrypoint
+│       └── package.json            # @unsa-slides/cli
+│
+├── packages/
+│   ├── schemas/                    # Shared Zod schemas (auth, orgs, presentations, manifest, cli-api)
+│   │   └── package.json            # @unsa-slides/schemas
+│   ├── db/                         # Drizzle ORM schema & client
+│   │   └── package.json            # @unsa-slides/db
+│   └── config/                     # Shared tsconfigs
+│       └── package.json            # @unsa-slides/config
+│
+├── biome.json                      # Workspace linter & formatter configuration
+├── package.json                    # Workspace root
+└── tsconfig.json                   # Solution tsconfig
 ```
 
-## Key patterns
+## Key Guidelines & Rules
 
-- **Adding a new presentation**: Create slides in `src/topics/<name>/presentation/slides.tsx`, then add an entry to `src/lib/presentations.tsx` with slug, path, title, description, and component.
-- **Loader vs component data**: Route loaders must return only serializable data. React components cannot survive JSON serialization (SSR). Look up component references client-side from the static `presentations` array using the route param.
-- **Path alias**: `@/*` maps to `./src/*` (tsconfig + vite config both configured).
-- **`routeTree.gen.ts`** is excluded from Biome and linter. Don't format it.
+- **No Barrel Files**: Do not use `index.ts` files that just `export *`. Submodules are exported directly via `package.json` exports (e.g. `@unsa-slides/schemas/manifest`, `@unsa-slides/db/schema/users`).
+- **Aliases over Relative Imports**:
+  - Intra-package imports use `@/*` alias (e.g. `@/lib/config`).
+  - Cross-package imports use package name alias (e.g. `@unsa-slides/schemas/manifest`, `@unsa-slides/db/client`).
+  - Do not use relative imports (`../` or `../../`).
+- **Direct Bun APIs**: Utilize `Bun.file()`, `Bun.write()`, `Bun.serve()`, `Bun.env` directly in CLI and scripts.
+- **TanStack Start**: Route tree is auto-generated at `apps/web/src/routeTree.gen.ts` — do not manually edit or format it.
+- **Biome**: Linter and formatter for the entire monorepo.
