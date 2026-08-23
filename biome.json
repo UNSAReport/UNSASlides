@@ -6,7 +6,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["src/**", "topics/**", "!!**/dist", "!!**/routeTree.gen.ts"]
+    "includes": [
+      "apps/**",
+      "packages/**",
+      "!!**/dist",
+      "!!**/routeTree.gen.ts",
+      "!!**/node_modules"
+    ]
   },
   "formatter": {
     "enabled": true,

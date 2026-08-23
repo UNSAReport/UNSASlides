@@ -1,16 +1,21 @@
-
-
 {
   "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"],
-    },
-    "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
-    "module": "ESNext",
     "target": "ES2022",
-    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "declaration": true
   },
-  "include": ["src/**/*", "src/topics/**/*"],
+  "references": [
+    { "path": "./packages/config" },
+    { "path": "./packages/schemas" },
+    { "path": "./packages/db" },
+    { "path": "./apps/cli" },
+    { "path": "./apps/web" }
+  ],
+  "files": []
 }
