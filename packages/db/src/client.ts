@@ -1,9 +1,9 @@
 import { createClient } from "@libsql/client";
+import * as orgsSchema from "@unsa-slides/db/schema/orgs";
+import * as presentationsSchema from "@unsa-slides/db/schema/presentations";
+import * as tokensSchema from "@unsa-slides/db/schema/tokens";
+import * as usersSchema from "@unsa-slides/db/schema/users";
 import { drizzle } from "drizzle-orm/libsql";
-import * as orgsSchema from "./schema/orgs";
-import * as presentationsSchema from "./schema/presentations";
-import * as tokensSchema from "./schema/tokens";
-import * as usersSchema from "./schema/users";
 
 const dbUrl = process.env.DATABASE_URL || "file:./local.db";
 const dbAuthToken = process.env.DATABASE_AUTH_TOKEN;

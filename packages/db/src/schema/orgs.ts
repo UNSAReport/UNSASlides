@@ -1,5 +1,5 @@
+import { users } from "@unsa-slides/db/schema/users";
 import { integer, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
-import { users } from "./users";
 
 export const organizations = sqliteTable("organizations", {
   id: text("id").primaryKey(),

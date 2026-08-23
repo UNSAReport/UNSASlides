@@ -1,9 +1,12 @@
 {
-  "extends": "../config/node.json",
+  "extends": "@unsa-slides/config/node.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*"]
 }

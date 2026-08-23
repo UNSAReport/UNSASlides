@@ -1,6 +1,6 @@
+import { SlideManifestSchema } from "@unsa-slides/schemas/manifest";
+import { PresentationVisibilitySchema } from "@unsa-slides/schemas/presentations";
 import { z } from "zod";
-import { SlideManifestSchema } from "./manifest";
-import { PresentationVisibilitySchema } from "./presentations";
 
 export const CliLoginInitResponseSchema = z.object({
   deviceCode: z.string(),
