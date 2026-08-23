@@ -10,13 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PresentationsRouteRouteImport } from './routes/presentations/route'
 import { Route as PresentationsIndexRouteImport } from './routes/presentations/index'
 import { Route as PresentationsTopicRouteImport } from './routes/presentations/$topic'
+import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
+import { Route as ApiAuthGoogleRouteImport } from './routes/api/auth/google'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PresentationsRouteRoute = PresentationsRouteRouteImport.update({
@@ -34,42 +42,79 @@ const PresentationsTopicRoute = PresentationsTopicRouteImport.update({
   path: '/$topic',
   getParentRoute: () => PresentationsRouteRoute,
 } as any)
+const ApiAuthCallbackRoute = ApiAuthCallbackRouteImport.update({
+  id: '/api/auth/callback',
+  path: '/api/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthGoogleRoute = ApiAuthGoogleRouteImport.update({
+  id: '/api/auth/google',
+  path: '/api/auth/google',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/presentations': typeof PresentationsRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
   '/presentations/': typeof PresentationsIndexRoute
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
+  '/api/auth/google': typeof ApiAuthGoogleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
   '/presentations': typeof PresentationsIndexRoute
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
+  '/api/auth/google': typeof ApiAuthGoogleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/presentations': typeof PresentationsRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
   '/presentations/': typeof PresentationsIndexRoute
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
+  '/api/auth/google': typeof ApiAuthGoogleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/presentations' | '/presentations/$topic' | '/presentations/'
+    | '/'
+    | '/presentations'
+    | '/login'
+    | '/presentations/$topic'
+    | '/presentations/'
+    | '/api/auth/callback'
+    | '/api/auth/google'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/presentations/$topic' | '/presentations'
+  to:
+    | '/'
+    | '/login'
+    | '/presentations/$topic'
+    | '/presentations'
+    | '/api/auth/callback'
+    | '/api/auth/google'
   id:
     | '__root__'
     | '/'
     | '/presentations'
+    | '/login'
     | '/presentations/$topic'
     | '/presentations/'
+    | '/api/auth/callback'
+    | '/api/auth/google'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PresentationsRouteRoute: typeof PresentationsRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
+  ApiAuthGoogleRoute: typeof ApiAuthGoogleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -79,6 +124,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/presentations': {
@@ -102,6 +154,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PresentationsTopicRouteImport
       parentRoute: typeof PresentationsRouteRoute
     }
+    '/api/auth/callback': {
+      id: '/api/auth/callback'
+      path: '/api/auth/callback'
+      fullPath: '/api/auth/callback'
+      preLoaderRoute: typeof ApiAuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/google': {
+      id: '/api/auth/google'
+      path: '/api/auth/google'
+      fullPath: '/api/auth/google'
+      preLoaderRoute: typeof ApiAuthGoogleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -121,6 +187,9 @@ const PresentationsRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PresentationsRouteRoute: PresentationsRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ApiAuthCallbackRoute: ApiAuthCallbackRoute,
+  ApiAuthGoogleRoute: ApiAuthGoogleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
