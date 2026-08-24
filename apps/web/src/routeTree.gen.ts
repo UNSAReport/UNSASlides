@@ -15,12 +15,14 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as PresentationsRouteRouteImport } from './routes/presentations/route'
 import { Route as PresentationsIndexRouteImport } from './routes/presentations/index'
 import { Route as PresentationsTopicRouteImport } from './routes/presentations/$topic'
+import { Route as SettingsTokensRouteImport } from './routes/settings/tokens'
 import { Route as ApiV1AuthCallbackRouteImport } from './routes/api/v1/auth/callback'
 import { Route as ApiV1AuthDeviceCodeRouteImport } from './routes/api/v1/auth/device-code'
 import { Route as ApiV1AuthDeviceExchangeRouteImport } from './routes/api/v1/auth/device-exchange'
 import { Route as ApiV1AuthGoogleRouteImport } from './routes/api/v1/auth/google'
 import { Route as ApiV1AuthLogoutRouteImport } from './routes/api/v1/auth/logout'
 import { Route as ApiV1AuthVerifyTokenRouteImport } from './routes/api/v1/auth/verify-token'
+import { Route as ApiV1PresentationsDeployRouteImport } from './routes/api/v1/presentations/deploy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +54,11 @@ const PresentationsTopicRoute = PresentationsTopicRouteImport.update({
   path: '/$topic',
   getParentRoute: () => PresentationsRouteRoute,
 } as any)
+const SettingsTokensRoute = SettingsTokensRouteImport.update({
+  id: '/settings/tokens',
+  path: '/settings/tokens',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiV1AuthCallbackRoute = ApiV1AuthCallbackRouteImport.update({
   id: '/api/v1/auth/callback',
   path: '/api/v1/auth/callback',
@@ -82,6 +89,12 @@ const ApiV1AuthVerifyTokenRoute = ApiV1AuthVerifyTokenRouteImport.update({
   path: '/api/v1/auth/verify-token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1PresentationsDeployRoute =
+  ApiV1PresentationsDeployRouteImport.update({
+    id: '/api/v1/presentations/deploy',
+    path: '/api/v1/presentations/deploy',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/device': typeof DeviceRoute
   '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
+  '/settings/tokens': typeof SettingsTokensRoute
   '/presentations/': typeof PresentationsIndexRoute
   '/api/v1/auth/callback': typeof ApiV1AuthCallbackRoute
   '/api/v1/auth/device-code': typeof ApiV1AuthDeviceCodeRoute
@@ -96,12 +110,14 @@ export interface FileRoutesByFullPath {
   '/api/v1/auth/google': typeof ApiV1AuthGoogleRoute
   '/api/v1/auth/logout': typeof ApiV1AuthLogoutRoute
   '/api/v1/auth/verify-token': typeof ApiV1AuthVerifyTokenRoute
+  '/api/v1/presentations/deploy': typeof ApiV1PresentationsDeployRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/device': typeof DeviceRoute
   '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
+  '/settings/tokens': typeof SettingsTokensRoute
   '/presentations': typeof PresentationsIndexRoute
   '/api/v1/auth/callback': typeof ApiV1AuthCallbackRoute
   '/api/v1/auth/device-code': typeof ApiV1AuthDeviceCodeRoute
@@ -109,6 +125,7 @@ export interface FileRoutesByTo {
   '/api/v1/auth/google': typeof ApiV1AuthGoogleRoute
   '/api/v1/auth/logout': typeof ApiV1AuthLogoutRoute
   '/api/v1/auth/verify-token': typeof ApiV1AuthVerifyTokenRoute
+  '/api/v1/presentations/deploy': typeof ApiV1PresentationsDeployRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -117,6 +134,7 @@ export interface FileRoutesById {
   '/device': typeof DeviceRoute
   '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
+  '/settings/tokens': typeof SettingsTokensRoute
   '/presentations/': typeof PresentationsIndexRoute
   '/api/v1/auth/callback': typeof ApiV1AuthCallbackRoute
   '/api/v1/auth/device-code': typeof ApiV1AuthDeviceCodeRoute
@@ -124,6 +142,7 @@ export interface FileRoutesById {
   '/api/v1/auth/google': typeof ApiV1AuthGoogleRoute
   '/api/v1/auth/logout': typeof ApiV1AuthLogoutRoute
   '/api/v1/auth/verify-token': typeof ApiV1AuthVerifyTokenRoute
+  '/api/v1/presentations/deploy': typeof ApiV1PresentationsDeployRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -133,6 +152,7 @@ export interface FileRouteTypes {
     | '/device'
     | '/login'
     | '/presentations/$topic'
+    | '/settings/tokens'
     | '/presentations/'
     | '/api/v1/auth/callback'
     | '/api/v1/auth/device-code'
@@ -140,12 +160,14 @@ export interface FileRouteTypes {
     | '/api/v1/auth/google'
     | '/api/v1/auth/logout'
     | '/api/v1/auth/verify-token'
+    | '/api/v1/presentations/deploy'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/device'
     | '/login'
     | '/presentations/$topic'
+    | '/settings/tokens'
     | '/presentations'
     | '/api/v1/auth/callback'
     | '/api/v1/auth/device-code'
@@ -153,6 +175,7 @@ export interface FileRouteTypes {
     | '/api/v1/auth/google'
     | '/api/v1/auth/logout'
     | '/api/v1/auth/verify-token'
+    | '/api/v1/presentations/deploy'
   id:
     | '__root__'
     | '/'
@@ -160,6 +183,7 @@ export interface FileRouteTypes {
     | '/device'
     | '/login'
     | '/presentations/$topic'
+    | '/settings/tokens'
     | '/presentations/'
     | '/api/v1/auth/callback'
     | '/api/v1/auth/device-code'
@@ -167,6 +191,7 @@ export interface FileRouteTypes {
     | '/api/v1/auth/google'
     | '/api/v1/auth/logout'
     | '/api/v1/auth/verify-token'
+    | '/api/v1/presentations/deploy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -174,12 +199,14 @@ export interface RootRouteChildren {
   PresentationsRouteRoute: typeof PresentationsRouteRouteWithChildren
   DeviceRoute: typeof DeviceRoute
   LoginRoute: typeof LoginRoute
+  SettingsTokensRoute: typeof SettingsTokensRoute
   ApiV1AuthCallbackRoute: typeof ApiV1AuthCallbackRoute
   ApiV1AuthDeviceCodeRoute: typeof ApiV1AuthDeviceCodeRoute
   ApiV1AuthDeviceExchangeRoute: typeof ApiV1AuthDeviceExchangeRoute
   ApiV1AuthGoogleRoute: typeof ApiV1AuthGoogleRoute
   ApiV1AuthLogoutRoute: typeof ApiV1AuthLogoutRoute
   ApiV1AuthVerifyTokenRoute: typeof ApiV1AuthVerifyTokenRoute
+  ApiV1PresentationsDeployRoute: typeof ApiV1PresentationsDeployRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -226,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PresentationsTopicRouteImport
       parentRoute: typeof PresentationsRouteRoute
     }
+    '/settings/tokens': {
+      id: '/settings/tokens'
+      path: '/settings/tokens'
+      fullPath: '/settings/tokens'
+      preLoaderRoute: typeof SettingsTokensRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/v1/auth/callback': {
       id: '/api/v1/auth/callback'
       path: '/api/v1/auth/callback'
@@ -268,6 +302,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1AuthVerifyTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/presentations/deploy': {
+      id: '/api/v1/presentations/deploy'
+      path: '/api/v1/presentations/deploy'
+      fullPath: '/api/v1/presentations/deploy'
+      preLoaderRoute: typeof ApiV1PresentationsDeployRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -289,12 +330,14 @@ const rootRouteChildren: RootRouteChildren = {
   PresentationsRouteRoute: PresentationsRouteRouteWithChildren,
   DeviceRoute: DeviceRoute,
   LoginRoute: LoginRoute,
+  SettingsTokensRoute: SettingsTokensRoute,
   ApiV1AuthCallbackRoute: ApiV1AuthCallbackRoute,
   ApiV1AuthDeviceCodeRoute: ApiV1AuthDeviceCodeRoute,
   ApiV1AuthDeviceExchangeRoute: ApiV1AuthDeviceExchangeRoute,
   ApiV1AuthGoogleRoute: ApiV1AuthGoogleRoute,
   ApiV1AuthLogoutRoute: ApiV1AuthLogoutRoute,
   ApiV1AuthVerifyTokenRoute: ApiV1AuthVerifyTokenRoute,
+  ApiV1PresentationsDeployRoute: ApiV1PresentationsDeployRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

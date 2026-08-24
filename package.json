@@ -12,6 +12,7 @@
     "dev:cli": "bun --filter @unsa-slides/cli dev",
     "build": "bun --filter \"*\" build",
     "build:web": "bun --filter @unsa-slides/web build",
+    "test": "vitest run",
     "db:push": "bun --filter @unsa-slides/db db:push",
     "db:generate": "bun --filter @unsa-slides/db db:generate",
     "db:studio": "bun --filter @unsa-slides/db db:studio",
@@ -23,7 +24,8 @@
     "@biomejs/biome": "2.5.0",
     "@types/bun": "latest",
     "@types/node": "^26.2.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^3.0.7"
   },
   "license": "AGPL-3.0"
 }
