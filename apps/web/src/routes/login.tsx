@@ -64,7 +64,7 @@ function LoginPage() {
 
         <div className="space-y-4">
           <a
-            href="/api/auth/google"
+            href="/api/v1/auth/google"
             className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100 hover:shadow-lg active:scale-[0.98]"
           >
             <svg

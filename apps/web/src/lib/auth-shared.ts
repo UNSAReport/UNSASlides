@@ -5,7 +5,7 @@ export const SESSION_COOKIE_NAME = "unsa_session";
 export function getGoogleOAuthURL(state: string = "default"): string {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
-    redirect_uri: `${clientEnv.BASE_URL}/api/auth/callback`,
+    redirect_uri: `${clientEnv.BASE_URL}/api/v1/auth/callback`,
     client_id: "mock-google-client-id",
     access_type: "offline",
     response_type: "code",

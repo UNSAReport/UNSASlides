@@ -27,12 +27,12 @@ graph TD
 
 ### 🔐 Milestone 1: Google OAuth & Session Management
 - **Google OAuth 2.0 Integration**:
-  - `GET /api/auth/google`: Initiates OAuth authorization flow with Google.
-  - `GET /api/auth/callback`: Handles Google redirect, creates/updates user in database (`users` table), and issues session token.
-  - `POST /api/auth/logout`: Clears session cookie and invalidates session.
+  - `GET /api/v1/auth/google`: Initiates OAuth authorization flow with Google.
+  - `GET /api/v1/auth/callback`: Handles Google redirect, creates/updates user in database (`users` table), and issues session token.
+  - `POST /api/v1/auth/logout`: Clears session cookie and invalidates session.
 - **Session Layer & Auth Context**:
   - HTTP-only, secure, `SameSite=Lax` session cookie (`unsa_session`).
-  - Auth helper in `apps/web/src/lib/auth.ts` to validate sessions on server routes and inject user context into TanStack Start loaders.
+  - Auth helper in `apps/web/src/lib/auth-server.ts` to validate sessions on server routes and inject user context into TanStack Start loaders.
 - **Login & Landing Page**:
   - `/login`: Clean, branded login page with "Sign in with Google" button.
   - `/`: Landing page highlighting platform features, CLI ecosystem, and dashboard access.
@@ -52,6 +52,7 @@ graph TD
 - **Device Code Flow**:
   - `POST /api/v1/auth/device-code`: Generates device login code for `slides login`.
   - `POST /api/v1/auth/device-exchange`: Exchanges verified device code for an API token.
+  - `GET /api/v1/auth/verify-token`: Verifies API tokens.
 
 ---
 
@@ -104,3 +105,4 @@ graph TD
   - Intra-package imports use `@/*` alias.
   - Cross-package imports use package name alias (`@unsa-slides/schemas/...`, `@unsa-slides/db/...`).
 - **Runtime & Tools**: Bun runtime APIs, TanStack Start, React 19, Tailwind CSS v4, Biome, Drizzle ORM.
+- **Consistent API Versioning**: All API routes use the `/api/v1/` prefix prefix.

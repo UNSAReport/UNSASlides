@@ -6,7 +6,7 @@ const callbackSearchSchema = z.object({
   code: z.string().optional(),
 });
 
-export const Route = createFileRoute("/api/auth/callback")({
+export const Route = createFileRoute("/api/v1/auth/callback")({
   validateSearch: (search) => callbackSearchSchema.parse(search),
   loaderDeps: ({ search }) => search,
   loader: async ({ deps }) => {

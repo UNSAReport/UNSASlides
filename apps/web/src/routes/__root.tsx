@@ -34,7 +34,7 @@ function RootComponent() {
     } catch {
       // fallback
     }
-    window.location.href = "/api/auth/logout";
+    window.location.href = "/api/v1/auth/logout";
   };
 
   return (

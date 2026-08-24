@@ -21,12 +21,12 @@ const SESSION_MAX_AGE_SECONDS = 30 * 24 * 60 * 60; // 30 days
 
 export function getGoogleOAuthURLServer(state: string = "default"): string {
   if (serverEnv.GOOGLE_CLIENT_ID === "mock-google-client-id") {
-    return `${serverEnv.BASE_URL}/api/auth/callback?code=mock_dev_code&state=${state}`;
+    return `${serverEnv.BASE_URL}/api/v1/auth/callback?code=mock_dev_code&state=${state}`;
   }
 
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
-    redirect_uri: `${serverEnv.BASE_URL}/api/auth/callback`,
+    redirect_uri: `${serverEnv.BASE_URL}/api/v1/auth/callback`,
     client_id: serverEnv.GOOGLE_CLIENT_ID,
     access_type: "offline",
     response_type: "code",
@@ -66,7 +66,7 @@ export async function exchangeGoogleCode(code: string): Promise<GoogleProfile> {
       code,
       client_id: serverEnv.GOOGLE_CLIENT_ID,
       client_secret: serverEnv.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `${serverEnv.BASE_URL}/api/auth/callback`,
+      redirect_uri: `${serverEnv.BASE_URL}/api/v1/auth/callback`,
       grant_type: "authorization_code",
     }),
   });
@@ -239,7 +239,6 @@ export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
     await deleteSession(sessionId);
   }
 
-  // Clear cookie completely
   setCookie(SESSION_COOKIE_NAME, "", {
     path: "/",
     httpOnly: true,
