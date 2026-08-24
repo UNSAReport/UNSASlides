@@ -20,6 +20,10 @@ import { serverEnv } from "@/lib/env";
 const SESSION_MAX_AGE_SECONDS = 30 * 24 * 60 * 60; // 30 days
 
 export function getGoogleOAuthURLServer(state: string = "default"): string {
+  if (serverEnv.GOOGLE_CLIENT_ID === "mock-google-client-id") {
+    return `${serverEnv.BASE_URL}/api/auth/callback?code=mock_dev_code&state=${state}`;
+  }
+
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
     redirect_uri: `${serverEnv.BASE_URL}/api/auth/callback`,
@@ -40,7 +44,10 @@ export function getGoogleOAuthURLServer(state: string = "default"): string {
 }
 
 export async function exchangeGoogleCode(code: string): Promise<GoogleProfile> {
-  if (serverEnv.GOOGLE_CLIENT_ID === "mock-google-client-id") {
+  if (
+    serverEnv.GOOGLE_CLIENT_ID === "mock-google-client-id" ||
+    code === "mock_dev_code"
+  ) {
     return {
       id: "google-mock-12345",
       email: "gustadev@unsa.edu.pe",

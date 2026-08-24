@@ -12,6 +12,9 @@
     "dev:cli": "bun --filter @unsa-slides/cli dev",
     "build": "bun --filter \"*\" build",
     "build:web": "bun --filter @unsa-slides/web build",
+    "db:push": "bun --filter @unsa-slides/db db:push",
+    "db:generate": "bun --filter @unsa-slides/db db:generate",
+    "db:studio": "bun --filter @unsa-slides/db db:studio",
     "lint:format": "biome format --write",
     "lint:check": "biome check --write",
     "typecheck": "bun --filter \"*\" typecheck"
