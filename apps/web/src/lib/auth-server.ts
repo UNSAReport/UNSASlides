@@ -237,10 +237,21 @@ export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
   const sessionId = getCookie(SESSION_COOKIE_NAME);
   if (sessionId) {
     await deleteSession(sessionId);
-    deleteCookie(SESSION_COOKIE_NAME, {
-      path: "/",
-    });
   }
+
+  // Clear cookie completely
+  setCookie(SESSION_COOKIE_NAME, "", {
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 0,
+    expires: new Date(0),
+  });
+  deleteCookie(SESSION_COOKIE_NAME, {
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+  });
 
   return { success: true };
 });

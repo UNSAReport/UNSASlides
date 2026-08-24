@@ -29,8 +29,12 @@ function RootComponent() {
   const { user } = Route.useRouteContext();
 
   const handleLogout = async () => {
-    await logoutFn();
-    window.location.href = "/";
+    try {
+      await logoutFn();
+    } catch {
+      // fallback
+    }
+    window.location.href = "/api/auth/logout";
   };
 
   return (

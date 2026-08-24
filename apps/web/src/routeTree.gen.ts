@@ -10,16 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DeviceRouteImport } from './routes/device'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PresentationsRouteRouteImport } from './routes/presentations/route'
 import { Route as PresentationsIndexRouteImport } from './routes/presentations/index'
 import { Route as PresentationsTopicRouteImport } from './routes/presentations/$topic'
 import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
 import { Route as ApiAuthGoogleRouteImport } from './routes/api/auth/google'
+import { Route as ApiAuthLogoutRouteImport } from './routes/api/auth/logout'
+import { Route as ApiV1AuthDeviceCodeRouteImport } from './routes/api/v1/auth/device-code'
+import { Route as ApiV1AuthDeviceExchangeRouteImport } from './routes/api/v1/auth/device-exchange'
+import { Route as ApiV1AuthVerifyTokenRouteImport } from './routes/api/v1/auth/verify-token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeviceRoute = DeviceRouteImport.update({
+  id: '/device',
+  path: '/device',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -52,69 +62,124 @@ const ApiAuthGoogleRoute = ApiAuthGoogleRouteImport.update({
   path: '/api/auth/google',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthLogoutRoute = ApiAuthLogoutRouteImport.update({
+  id: '/api/auth/logout',
+  path: '/api/auth/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthDeviceCodeRoute = ApiV1AuthDeviceCodeRouteImport.update({
+  id: '/api/v1/auth/device-code',
+  path: '/api/v1/auth/device-code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthDeviceExchangeRoute = ApiV1AuthDeviceExchangeRouteImport.update({
+  id: '/api/v1/auth/device-exchange',
+  path: '/api/v1/auth/device-exchange',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthVerifyTokenRoute = ApiV1AuthVerifyTokenRouteImport.update({
+  id: '/api/v1/auth/verify-token',
+  path: '/api/v1/auth/verify-token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/presentations': typeof PresentationsRouteRouteWithChildren
+  '/device': typeof DeviceRoute
   '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
   '/presentations/': typeof PresentationsIndexRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/google': typeof ApiAuthGoogleRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/v1/auth/device-code': typeof ApiV1AuthDeviceCodeRoute
+  '/api/v1/auth/device-exchange': typeof ApiV1AuthDeviceExchangeRoute
+  '/api/v1/auth/verify-token': typeof ApiV1AuthVerifyTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/device': typeof DeviceRoute
   '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
   '/presentations': typeof PresentationsIndexRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/google': typeof ApiAuthGoogleRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/v1/auth/device-code': typeof ApiV1AuthDeviceCodeRoute
+  '/api/v1/auth/device-exchange': typeof ApiV1AuthDeviceExchangeRoute
+  '/api/v1/auth/verify-token': typeof ApiV1AuthVerifyTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/presentations': typeof PresentationsRouteRouteWithChildren
+  '/device': typeof DeviceRoute
   '/login': typeof LoginRoute
   '/presentations/$topic': typeof PresentationsTopicRoute
   '/presentations/': typeof PresentationsIndexRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/google': typeof ApiAuthGoogleRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/v1/auth/device-code': typeof ApiV1AuthDeviceCodeRoute
+  '/api/v1/auth/device-exchange': typeof ApiV1AuthDeviceExchangeRoute
+  '/api/v1/auth/verify-token': typeof ApiV1AuthVerifyTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/presentations'
+    | '/device'
     | '/login'
     | '/presentations/$topic'
     | '/presentations/'
     | '/api/auth/callback'
     | '/api/auth/google'
+    | '/api/auth/logout'
+    | '/api/v1/auth/device-code'
+    | '/api/v1/auth/device-exchange'
+    | '/api/v1/auth/verify-token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/device'
     | '/login'
     | '/presentations/$topic'
     | '/presentations'
     | '/api/auth/callback'
     | '/api/auth/google'
+    | '/api/auth/logout'
+    | '/api/v1/auth/device-code'
+    | '/api/v1/auth/device-exchange'
+    | '/api/v1/auth/verify-token'
   id:
     | '__root__'
     | '/'
     | '/presentations'
+    | '/device'
     | '/login'
     | '/presentations/$topic'
     | '/presentations/'
     | '/api/auth/callback'
     | '/api/auth/google'
+    | '/api/auth/logout'
+    | '/api/v1/auth/device-code'
+    | '/api/v1/auth/device-exchange'
+    | '/api/v1/auth/verify-token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PresentationsRouteRoute: typeof PresentationsRouteRouteWithChildren
+  DeviceRoute: typeof DeviceRoute
   LoginRoute: typeof LoginRoute
   ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
   ApiAuthGoogleRoute: typeof ApiAuthGoogleRoute
+  ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
+  ApiV1AuthDeviceCodeRoute: typeof ApiV1AuthDeviceCodeRoute
+  ApiV1AuthDeviceExchangeRoute: typeof ApiV1AuthDeviceExchangeRoute
+  ApiV1AuthVerifyTokenRoute: typeof ApiV1AuthVerifyTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -124,6 +189,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/device': {
+      id: '/device'
+      path: '/device'
+      fullPath: '/device'
+      preLoaderRoute: typeof DeviceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -168,6 +240,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthGoogleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/logout': {
+      id: '/api/auth/logout'
+      path: '/api/auth/logout'
+      fullPath: '/api/auth/logout'
+      preLoaderRoute: typeof ApiAuthLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/device-code': {
+      id: '/api/v1/auth/device-code'
+      path: '/api/v1/auth/device-code'
+      fullPath: '/api/v1/auth/device-code'
+      preLoaderRoute: typeof ApiV1AuthDeviceCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/device-exchange': {
+      id: '/api/v1/auth/device-exchange'
+      path: '/api/v1/auth/device-exchange'
+      fullPath: '/api/v1/auth/device-exchange'
+      preLoaderRoute: typeof ApiV1AuthDeviceExchangeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/verify-token': {
+      id: '/api/v1/auth/verify-token'
+      path: '/api/v1/auth/verify-token'
+      fullPath: '/api/v1/auth/verify-token'
+      preLoaderRoute: typeof ApiV1AuthVerifyTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -187,9 +287,14 @@ const PresentationsRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PresentationsRouteRoute: PresentationsRouteRouteWithChildren,
+  DeviceRoute: DeviceRoute,
   LoginRoute: LoginRoute,
   ApiAuthCallbackRoute: ApiAuthCallbackRoute,
   ApiAuthGoogleRoute: ApiAuthGoogleRoute,
+  ApiAuthLogoutRoute: ApiAuthLogoutRoute,
+  ApiV1AuthDeviceCodeRoute: ApiV1AuthDeviceCodeRoute,
+  ApiV1AuthDeviceExchangeRoute: ApiV1AuthDeviceExchangeRoute,
+  ApiV1AuthVerifyTokenRoute: ApiV1AuthVerifyTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
